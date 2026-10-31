@@ -1,0 +1,54 @@
+(.venv) pravin@MSI:~/iomico/zephyr-course$ west build -b native_sim app -p -t run
+-- west build: making build dir /home/pravin/iomico/zephyr-course/build pristine
+-- west build: generating a build system
+Loading Zephyr default modules (Zephyr base).
+-- Application: /home/pravin/iomico/zephyr-course/app
+-- CMake version: 3.28.3
+-- Found Python3: /home/pravin/iomico/zephyrproject/.venv/bin/python3 (found suitable version "3.12.3", minimum required is "3.10") found components: Interpreter 
+-- Cache files will be written to: /home/pravin/.cache/zephyr
+-- Zephyr version: 4.2.0 (/home/pravin/iomico/deps/zephyr)
+-- Found west (found suitable version "1.5.0", minimum required is "0.14.0")
+-- Board: native_sim, qualifiers: native
+-- ZEPHYR_TOOLCHAIN_VARIANT not set, trying to locate Zephyr SDK
+-- Found host-tools: zephyr 0.17.4 (/home/pravin/zephyr-sdk-0.17.4)
+-- Found toolchain: host (gcc/ld)
+-- Found Dtc: /usr/bin/dtc (found suitable version "1.7.0", minimum required is "1.4.6") 
+-- Found BOARD.dts: /home/pravin/iomico/deps/zephyr/boards/native/native_sim/native_sim.dts
+-- Generated zephyr.dts: /home/pravin/iomico/zephyr-course/build/zephyr/zephyr.dts
+-- Generated pickled edt: /home/pravin/iomico/zephyr-course/build/zephyr/edt.pickle
+-- Generated devicetree_generated.h: /home/pravin/iomico/zephyr-course/build/zephyr/include/generated/zephyr/devicetree_generated.h
+Parsing /home/pravin/iomico/deps/zephyr/Kconfig
+Loaded configuration '/home/pravin/iomico/deps/zephyr/boards/native/native_sim/native_sim_defconfig'
+Merged configuration '/home/pravin/iomico/zephyr-course/app/prj.conf'
+Configuration saved to '/home/pravin/iomico/zephyr-course/build/zephyr/.config'
+Kconfig header saved to '/home/pravin/iomico/zephyr-course/build/zephyr/include/generated/zephyr/autoconf.h'
+-- Found GnuLd: /usr/bin/ld.bfd (found version "2.42") 
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /usr/bin/gcc
+-- Found gen_kobject_list: /home/pravin/iomico/deps/zephyr/scripts/build/gen_kobject_list.py
+-- Configuring done (8.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/pravin/iomico/zephyr-course/build
+-- west build: running target run
+[1/97] Preparing syscall dependency handling
+
+[2/97] Generating include/generated/zephyr/version.h
+-- Zephyr version: 4.2.0 (/home/pravin/iomico/deps/zephyr), build: v4.2.0
+[94/97] Linking CXX executable zephyr/zephyr.elf
+Generating files from /home/pravin/iomico/zephyr-course/build/zephyr/zephyr.elf for board: native_sim
+[96/97] cd /home/pravin/iomico/zephyr-course/build && /home/pravin/iomico/zephyr-course/build/zephyr/zephyr.exe
+*** Booting Zephyr OS build v4.2.0 ***
+[00:00:00.000,000] <inf> main: LED state: OFF
+[00:00:01.010,000] <inf> main: LED state: ON
+[00:00:02.020,000] <inf> main: LED state: OFF
+[00:00:03.030,000] <inf> main: LED state: ON
+[00:00:04.040,000] <inf> main: LED state: OFF
+[00:00:05.050,000] <inf> main: LED state: ON
+[00:00:06.060,000] <inf> main: LED state: OFF
+[00:00:07.070,000] <inf> main: LED state: ON
+[00:00:08.080,000] <inf> main: LED state: OFF
+^C
+Stopped at 8.140s
+ninja: build stopped: interrupted by user.
