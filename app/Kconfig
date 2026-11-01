@@ -66,6 +66,13 @@ if LED_SUBSYSTEM
 
     endmenu
 
+    config APP_HEARTBEAT_PERIOD_MS
+    int "App heartbeat period"
+    default 500
+    range 100 2000
+    help
+      App heartbeat in ms
+
 endif
 
 source "Kconfig.zephyr"
