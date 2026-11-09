@@ -3,6 +3,7 @@
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include <our_driver/our_driver.h>
 
 #define DT_DRV_COMPAT our_driver
 
@@ -14,36 +15,93 @@ struct our_driver_config {
 
 struct our_driver_data {
     bool led_state;
+    uint32_t toggle_count;
 };
 
-static int our_driver_sample_fetch(const struct device *dev,
-                                   enum sensor_channel chan)
+static int our_driver_sample_fetch(
+    const struct device *dev,
+    enum sensor_channel chan)
 {
     const struct our_driver_config *config = dev->config;
     struct our_driver_data *data = dev->data;
 
-    gpio_pin_set_dt(&config->led, 1);
+    int ret = gpio_pin_set_dt(&config->led, 1);
+
+    if (ret < 0) {
+        return ret;
+    }
+
+    if (!data->led_state) {
+        data->toggle_count++;
+    }
+
     data->led_state = true;
 
-    LOG_INF("LED turned ON");
+    LOG_INF("LED ON | Toggle count: %u",
+            data->toggle_count);
 
     return 0;
 }
 
-static int our_driver_channel_get(const struct device *dev,
-                                  enum sensor_channel chan,
-                                  struct sensor_value *val)
+static int our_driver_channel_get(
+    const struct device *dev,
+    enum sensor_channel chan,
+    struct sensor_value *val)
 {
     const struct our_driver_config *config = dev->config;
     struct our_driver_data *data = dev->data;
 
-    gpio_pin_set_dt(&config->led, 0);
+    int ret = gpio_pin_set_dt(&config->led, 0);
+
+    if (ret < 0) {
+        return ret;
+    }
+
+    if (data->led_state) {
+        data->toggle_count++;
+    }
+
     data->led_state = false;
 
     val->val1 = 0;
     val->val2 = 0;
 
-    LOG_INF("LED turned OFF");
+    LOG_INF("LED OFF | Toggle count: %u",
+            data->toggle_count);
+
+    return 0;
+}
+
+int our_driver_set_toggle_count(
+    const struct device *dev,
+    uint32_t count)
+{
+    if (dev == NULL || !device_is_ready(dev)) {
+        return -ENODEV;
+    }
+
+    struct our_driver_data *data = dev->data;
+
+    data->toggle_count = count;
+
+    return 0;
+}
+
+int our_driver_get_toggle_count(
+    const struct device *dev,
+    uint32_t *count)
+{
+    if (dev == NULL || count == NULL) {
+        return -EINVAL;
+    }
+
+    if (!device_is_ready(dev)) {
+        return -ENODEV;
+    }
+
+    const struct our_driver_data *data = dev->data;
+
+    *count = data->toggle_count;
 
     return 0;
 }
@@ -67,6 +125,7 @@ static int our_driver_init(const struct device *dev)
     }
 
     data->led_state = false;
+    data->toggle_count = 0;
 
     LOG_INF("Our LED driver initialized");
 
