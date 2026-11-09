@@ -1,0 +1,7 @@
+menuconfig OUR_DRIVER
+    bool "Our Custom Driver"
+    default y
+    depends on DT_HAS_OUR_DRIVER_ENABLED
+    select SENSOR
+    help
+      Enable the custom sensor driver.

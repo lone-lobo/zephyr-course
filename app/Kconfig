@@ -75,4 +75,5 @@ if LED_SUBSYSTEM
 
 endif
 
+rsource "../drivers/our_driver/Kconfig"
 source "Kconfig.zephyr"
