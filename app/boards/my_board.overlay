@@ -6,5 +6,6 @@
 	our_driver0: our_driver{
 		compatible = "our,driver";
 		status = "okay";
+		led = <&blue_led>;
    	};
 };
