@@ -8,12 +8,22 @@
 #include <fsl_clock.h>
 #include <fsl_spc.h>
 #include <soc.h>
+#include <zephyr/kernel.h>
+#include <zephyr/sys/printk.h>
 
 /* Core clock frequency: 96MHz */
 #define CLOCK_INIT_CORE_CLOCK            96000000U
 #define BOARD_BOOTCLOCKFRO96M_CORE_CLOCK 96000000U
 /* System clock frequency. */
 extern uint32_t SystemCoreClock;
+
+/* Board initialization message */
+static int board_init_message(void)
+{
+	printk("Board Initialized\n");
+
+	return 0;
+}
 
 void board_early_init_hook(void)
 {
@@ -201,3 +211,6 @@ void board_early_init_hook(void)
 	/* Set SystemCoreClock variable. */
 	SystemCoreClock = CLOCK_INIT_CORE_CLOCK;
 }
+
+	
+SYS_INIT(board_init_message, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);

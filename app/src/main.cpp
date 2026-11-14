@@ -1,7 +1,6 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-#include <zephyr/sys/printk.h>
 
 /* The devicetree node identifier for the "led0" alias. */
 #define LED_NODE DT_ALIAS(app_led)
@@ -9,14 +8,6 @@
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED_NODE, gpios);
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
-
-static int our_board_init(void)
-{
-    printk("Board Initialized\n");
-    return 0;
-}
-
-SYS_INIT(our_board_init, APPLICATION, 0);
 
 int main(void)
 {
